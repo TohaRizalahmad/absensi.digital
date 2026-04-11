@@ -1,0 +1,20 @@
+{
+  "name": "absensi-digital",
+  "version": "1.0.0",
+  "description": "Sistem absensi digital berbasis web untuk mobile (guru) dan desktop (admin/dashboard).",
+  "main": "index.js",
+  "scripts": {
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev": "start npm run dev:backend && timeout /t 2 && npm run dev:frontend",
+    "setup:db": "npm run setup:db --prefix backend",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
