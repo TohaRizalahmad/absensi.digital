@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { isLoggedIn } from './lib/auth';
+import { isLoggedIn, getUser } from './lib/auth';
 import NavBar from './components/NavBar';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -12,6 +12,11 @@ import Attendance from './pages/Attendance';
 
 function ProtectedRoute({ children }) {
   return isLoggedIn() ? children : <Navigate to="/login" replace />;
+}
+
+function AdminRoute({ children }) {
+  const user = getUser();
+  return user?.role === 'admin' ? children : <Navigate to="/dashboard" replace />;
 }
 
 export default function App() {
@@ -28,11 +33,11 @@ export default function App() {
                 <Routes>
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="scan" element={<Scan />} />
-                  <Route path="students" element={<Students />} />
-                  <Route path="classes" element={<Classes />} />
-                  <Route path="subjects" element={<Subjects />} />
-                  <Route path="schedules" element={<Schedules />} />
-                  <Route path="attendance" element={<Attendance />} />
+                  <Route path="students" element={<AdminRoute><Students /></AdminRoute>} />
+                  <Route path="classes" element={<AdminRoute><Classes /></AdminRoute>} />
+                  <Route path="subjects" element={<AdminRoute><Subjects /></AdminRoute>} />
+                  <Route path="schedules" element={<AdminRoute><Schedules /></AdminRoute>} />
+                  <Route path="attendance" element={<AdminRoute><Attendance /></AdminRoute>} />
                   <Route path="*" element={<Navigate to="dashboard" replace />} />
                 </Routes>
               </ProtectedRoute>
